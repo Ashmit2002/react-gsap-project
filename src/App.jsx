@@ -11,10 +11,19 @@ import FooterSection from "./sections/FooterSection";
 const App = () => {
   gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
   useGSAP(() => {
-    ScrollSmoother.create({
-      smooth: 3,
-      effects: true,
-    });
+    // Only create ScrollSmoother on client side
+    if (typeof window !== 'undefined') {
+      try {
+        ScrollSmoother.create({
+          wrapper: "#smooth-wrapper",
+          content: "#smooth-content",
+          smooth: 3,
+          effects: true,
+        });
+      } catch (error) {
+        console.error("Error creating ScrollSmoother:", error);
+      }
+    }
   });
   return (
     <main>
